@@ -52,3 +52,6 @@ next-env.d.ts
 ../Environments/
 ../Tata/
 ../common/
+node_modules
+.next
+.env*.local
