@@ -6,6 +6,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Edit2, Trash2 } from 'lucide-react'
 import Link from 'next/link'
+import EvidenceSubmissionPlatform from './EvidenceSubmissionPlatform'
 
 // Mock data for demonstration
 const mockUserStories = [
@@ -16,6 +17,7 @@ const mockUserStories = [
 
 export default function Dashboard() {
   const [userStories, setUserStories] = useState(mockUserStories)
+  const [showSubmissionForm, setShowSubmissionForm] = useState(false)
 
   // In a real application, you would fetch the user's stories from your API here
   useEffect(() => {
@@ -59,7 +61,7 @@ export default function Dashboard() {
           </CardContent>
         </Card>
       </div>
-      <Card>
+      <Card className="mb-6">
         <CardHeader>
           <CardTitle>Your Stories</CardTitle>
         </CardHeader>
@@ -97,7 +99,22 @@ export default function Dashboard() {
           </Table>
         </CardContent>
       </Card>
-      <div className="mt-6">
+      <div className="mb-6">
+        <Button onClick={() => setShowSubmissionForm(!showSubmissionForm)}>
+          {showSubmissionForm ? 'Hide Submission Form' : 'Submit New Evidence'}
+        </Button>
+      </div>
+      {showSubmissionForm && (
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle>Submit New Evidence</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <EvidenceSubmissionPlatform />
+          </CardContent>
+        </Card>
+      )}
+      <div>
         <Button asChild>
           <Link href="/submit-story">Submit New Story</Link>
         </Button>
