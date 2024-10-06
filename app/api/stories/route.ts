@@ -1,28 +1,28 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
-type Story = {
-  id: string
-  title: string
-  content: string
-  author: string
-  createdAt: string
-}
+// This is a mock database. In a real application, you'd use a proper database.
+const stories = [
+  { id: '1', title: 'First Story', content: 'This is the content of the first story...', author: 'John Doe', createdAt: '2023-06-01' },
+  { id: '2', title: 'Second Story', content: 'This is the content of the second story...', author: 'Jane Smith', createdAt: '2023-06-02' },
+  // ... add more stories
+]
 
-let stories: Story[] = []
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const page = parseInt(searchParams.get('page') || '1')
+  const search = searchParams.get('search') || ''
+  const pageSize = 10
 
-export async function GET() {
-  return NextResponse.json(stories)
-}
+  let filteredStories = stories
 
-export async function POST(request: NextRequest) {
-  const body = await request.json()
-  const newStory: Story = {
-    id: Date.now().toString(),
-    title: body.title,
-    content: body.content,
-    author: body.author,
-    createdAt: new Date().toISOString()
+  if (search) {
+    filteredStories = stories.filter(story => 
+      story.title.toLowerCase().includes(search.toLowerCase()) ||
+      story.content.toLowerCase().includes(search.toLowerCase())
+    )
   }
-  stories.push(newStory)
-  return NextResponse.json(newStory, { status: 201 })
+
+  const paginatedStories = filteredStories.slice((page - 1) * pageSize, page * pageSize)
+
+  return NextResponse.json(paginatedStories)
 }

@@ -7,11 +7,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { useToast } from "@/components/ui/useToast"
+import { useToast } from "@/components/ui/use-toast"
 import { Label } from "@/components/ui/label"
 import { Progress } from "@/components/ui/progress"
 
-export default function EvidenceSubmissionPlatform() {
+const EvidenceSubmissionForm: React.FC = () => {
   const [file, setFile] = useState<File | null>(null)
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
@@ -57,18 +57,6 @@ export default function EvidenceSubmissionPlatform() {
     try {
       // Simulating API call
       await new Promise(resolve => setTimeout(resolve, 3000))
-
-      // Here you would typically send the data to your backend
-      // const formData = new FormData()
-      // formData.append('title', title)
-      // formData.append('description', description)
-      // formData.append('location', location)
-      // formData.append('file', file)
-      // const response = await fetch('/api/submit-evidence', {
-      //   method: 'POST',
-      //   body: formData,
-      // })
-      // if (!response.ok) throw new Error('Submission failed')
 
       setSubmissionStatus('success')
       toast({
@@ -192,3 +180,5 @@ export default function EvidenceSubmissionPlatform() {
     </Card>
   )
 }
+
+export default EvidenceSubmissionForm
