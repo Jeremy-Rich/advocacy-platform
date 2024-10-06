@@ -1,36 +1,21 @@
-import React from 'react'
-import Link from 'next/link'
+import './globals.css'
+import { Inter } from 'next/font/google'
 
-interface LayoutProps {
-  children: React.ReactNode
+const inter = Inter({ subsets: ['latin'] })
+
+export const metadata = {
+  title: 'Zion Advocacy Platform',
+  description: 'A platform for sharing and advocating community stories',
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="bg-blue-500 text-white p-4">
-        <nav className="container mx-auto flex justify-between items-center">
-          <Link href="/" className="text-2xl font-bold">
-            Zion Advocacy
-          </Link>
-          <div className="space-x-4">
-            <Link href="/submit-story" className="hover:underline">
-              Submit Story
-            </Link>
-            <Link href="/stories" className="hover:underline">
-              View Stories
-            </Link>
-          </div>
-        </nav>
-      </header>
-      <main className="flex-grow container mx-auto p-4">
-        {children}
-      </main>
-      <footer className="bg-gray-200 p-4 text-center">
-        <p>&copy; 2023 Zion Advocacy Platform. All rights reserved.</p>
-      </footer>
-    </div>
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
+    </html>
   )
 }
-
-export default Layout
